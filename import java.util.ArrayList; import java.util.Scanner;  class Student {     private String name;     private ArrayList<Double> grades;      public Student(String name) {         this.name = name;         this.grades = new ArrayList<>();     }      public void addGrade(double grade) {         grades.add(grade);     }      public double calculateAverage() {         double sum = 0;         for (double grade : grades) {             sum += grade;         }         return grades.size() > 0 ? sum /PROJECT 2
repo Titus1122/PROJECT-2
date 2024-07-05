@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Student {
+    private String name;
+    private ArrayList<Double> grades;
+
+    public Student(String name) {
+        this.name = name;
+        this.grades = new ArrayList<>();
+    }
+
+    public void addGrade(double grade) {
+        grades.add(grade);
+    }
+
+    public double calculateAverage() {
+        double sum = 0;
+        for (double grade : grades) {
+            sum += grade;
+        }
+        return grades.size() > 0 ? sum / grades.size() : 0;
+    }
+
+    public char calculateLetterGrade(double average) {
+        if (average >= 90) {
+            return 'A';
+        } else if (average >= 80) {
+            return 'B';
+        } else if (average >= 70) {
+            return 'C';
+        } else if (average >= 60) {
+            return 'D';
+        } else {
+            return 'F';
+        }
+    }
+
+    public double calculateGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
+    }
+
+    public void displayStudentInfo() {
+        double average = calculateAverage();
+        char letterGrade = calculateLetterGrade(average);
+        double gpa = calculateGPA(average);
+
+        System.out.println("Student Name: " + name);
+        System.out.println("Grades: " + grades);
+        System.out.println("Average Grade: " + average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.println("GPA: " + gpa);
+    }
+}
+
+public class StudentGradesManager {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter student name: ");
+        String studentName = scanner.nextLine();
+
+        Student student = new Student(studentName);
+
+        while (true) {
+            System.out.print("Enter grade (or -1 to finish): ");
+            double grade = scanner.nextDouble();
+            if (grade == -1) {
+                break;
+            }
+            student.addGrade(grade);
+        }
+
+        student.displayStudentInfo();
+
+        scanner.close();
+    }
+}
